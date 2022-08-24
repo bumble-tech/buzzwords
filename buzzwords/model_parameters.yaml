@@ -1,0 +1,26 @@
+# Default parameters for Buzzwords model
+Embedding:
+  model_name_or_path: 'all-mpnet-base-v2'
+UMAP:
+  n_neighbors: 10
+  n_components: 5
+  min_dist: 0.0
+  random_state: 123
+  n_epochs: 500
+HDBSCAN:
+  min_cluster_size: 10
+  min_samples: 15
+  metric: 'euclidean'
+  cluster_selection_method: 'eom'
+Keywords:
+  min_df: 1
+  num_words: 10
+  num_word_candidates: 15
+Buzzwords:
+  lemmatise_sentences: False
+  get_keywords: True
+  embedding_batch_size: 128
+  matryoshka_decay: 0.8
+  keyword_backend: 'keybert'
+  prediction_data: False
+  model_type: 'sentencetransformers'
