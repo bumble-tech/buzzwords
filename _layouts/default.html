@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en-US' }}">
+  <head>
+    <meta charset="UTF-8">
+
+    {% seo %}
+
+    <link rel="shortcut icon" type="image/x-icon" href="{{ site.logo_url }}?">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="{{ site.url }}/assets/caymanaconda.css">
+  </head>
+  <body>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      {% for sidebar in site.sidebar %}
+        <a href="{{ site.url }}/{{ sidebar}}" >{{sidebar | capitalize}}</a>
+      {% endfor %}
+    </div>
+
+    <div id="main">
+      <header class="page-header" role="banner">
+        <div class="boxed">    
+          <h1 id="logo">
+            <a href="{{ site.url }}" style="color:#FFFFFF">
+              <img src="{{ site.url }}/{{ site.logo_url }}" alt="logo" width="25%" style="vertical-align:middle"/>
+              {{ site.title }}
+            </a>
+          </h1>
+        </div>
+      </header>
+
+      <span onclick="openNav()" class="vertical-center" > >>></span>
+
+      <main id="content" class="main-content" role="main">
+        {{ content }}
+
+        <footer class="site-footer">
+            <span class="site-footer-owner" align="center">
+              
+              <a href="{{ site.repo_url }}">{{ site.title }}</a> is maintained by DS@Bumble
+            <span>
+        </footer>
+      </main>
+    </div>
+    
+    <script type="text/javascript">
+      /* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
+      function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+        document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+      }
+
+      /* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
+      function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+        document.body.style.backgroundColor = "white";
+      }</script>
+  </body>
+</html>
