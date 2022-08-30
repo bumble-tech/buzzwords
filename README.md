@@ -2,7 +2,7 @@
 
 Buzzwords is Bumble's GPU-powered topic modelling tool, used for gathering insights on topics in text or images on a large scale. The algorithm is based on [Bertopic](https://maartengr.github.io/BERTopic/index.html) and [Top2Vec](https://arxiv.org/abs/2008.09470), but altered to be faster.
 
-For more information see [the website](https://github.com/pages/bumble-tech/buzzwords)
+For more information see [the website](https://bumble-tech.github.io/buzzwords/)
 
 ## Installation
 
