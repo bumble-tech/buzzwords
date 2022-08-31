@@ -2,7 +2,9 @@
 
 # Local Installation
 
-Installation for buzzwords is somewhat complicated, due to the need for cuML (and to a lesser extent, FAISS) on an Nvidia GPU-powered machine. RAPIDS doesn't support installation through pip anymore, so we need to use conda environments. 
+Installation for buzzwords is somewhat complicated, due to the need for cuML (and to a lesser extent, FAISS) on an Nvidia GPU-powered machine. Buzzwords is only designed to work on Linux machines running Nvidia GPUs, and is it not recommended to try installation on other systems.
+
+RAPIDS doesn't support installation through pip anymore, so we need to use conda environments. 
 
 As such, installation has been packaged up into a bash script `install.sh` which can be found in the main repo.
 
@@ -26,7 +28,7 @@ This installation setup is quite fragile and we haven't tested it extensively. Y
 
 # Docker Installation
 
-To deploy Buzzwords in some use cases, we use Docker images with the library already installed in a conda environment. If you're struggling to install buzzwords, this is an alternative option to run your training scripts
+To deploy Buzzwords in some use cases, we use Docker images with the library already installed in a conda environment. If you're struggling to install buzzwords, this is an alternative option to run your training scripts.
 
 ## Building a Base Image
 
