@@ -12,20 +12,15 @@ As such, installation has been packaged up into a bash script `install.sh` which
 $ ./install.sh environment-name
 ```
 
-This will create the conda environment (with either your given name or `buzzwords` as default) with Buzzwords installed in it. Note - this will take 30+mins
-
-For installation on an A100, you may need to run an additional
-
-```bash
-pip3 install torch==1.7.0+cu111 -f https://download.pytorch.org/whl/torch_stable.html
-```
-
-To fix the pytorch version for SentenceTransformers
-
-This installation setup is quite fragile and we haven't tested it extensively. You can use Docker to run your scripts if you run into issues
-
+This will create the conda environment (with either your given name or `buzzwords` as default) with Buzzwords installed in it. This installation setup is quite fragile and we haven't tested it extensively. You can use Docker or cloud services such as Kaggle/GCP/AWS to run your scripts if you run into issues
 ***
 
+# Kaggle Installation
+
+Installation has been tested on Kaggle notebooks and an example can be found [here](https://www.kaggle.com/code/stephenofarrell/topic-modelling-on-gpu-buzzwords/notebook)
+
+
+***
 # Docker Installation
 
 To deploy Buzzwords in some use cases, we use Docker images with the library already installed in a conda environment. If you're struggling to install buzzwords, this is an alternative option to run your training scripts.
@@ -100,3 +95,13 @@ source activate buzzwords
 
 python3 train.py
 ```
+
+## A100 Issues
+
+For installation on an A100, you may need to run an additional
+
+```bash
+pip3 install torch==1.7.0+cu111 -f https://download.pytorch.org/whl/torch_stable.html
+```
+
+To fix the pytorch version for SentenceTransformers
