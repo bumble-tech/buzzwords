@@ -13,6 +13,7 @@ $ ./install.sh environment-name
 ```
 
 This will create the conda environment (with either your given name or `buzzwords` as default) with Buzzwords installed in it. This installation setup is quite fragile and we haven't tested it extensively. You can use Docker or cloud services such as Kaggle/GCP/AWS to run your scripts if you run into issues
+
 ***
 
 # Kaggle Installation
