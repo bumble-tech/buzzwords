@@ -1,0 +1,9 @@
+__pycache__/*
+
+envi/*
+venv/*
+_site/*
+buzzwords.egg-info/*
+Gemfile.lock
+
+.DS_Store
