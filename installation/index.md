@@ -60,7 +60,7 @@ $ docker/test/run_test.sh $IMAGE
 If the base image works properly, you will see something like:
 
 ```
-[sofarrell@datascience6.mlan buzzwords]$ docker/test/run_test.sh buzzwords-base:0.2.2
+$ docker/test/run_test.sh buzzwords-base:0.2.2
 Sending build context to Docker daemon  4.096kB
 Step 1/5 : ARG IMAGE=placeholder
 Step 2/5 : FROM $IMAGE
