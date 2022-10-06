@@ -22,5 +22,5 @@ Buzzwords:
   embedding_batch_size: 128
   matryoshka_decay: 0.8
   keyword_backend: 'keybert'
-  prediction_data: False
+  prediction_data: True
   model_type: 'sentencetransformers'

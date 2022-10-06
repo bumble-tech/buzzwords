@@ -567,6 +567,9 @@ class Buzzwords():
         destination : str
             Location to dump model to
         """
+        if self.prediction_data is False:
+            raise Exception('`prediction_data` is set to false for this model')
+
         destination = Path(destination)
 
         # If file directory was given instead of filename
