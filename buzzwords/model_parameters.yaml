@@ -12,6 +12,7 @@ HDBSCAN:
   min_samples: 15
   metric: 'euclidean'
   cluster_selection_method: 'eom'
+  prediction_data: True
 Keywords:
   min_df: 1
   num_words: 10
@@ -22,5 +23,4 @@ Buzzwords:
   embedding_batch_size: 128
   matryoshka_decay: 0.8
   keyword_backend: 'keybert'
-  prediction_data: True
   model_type: 'sentencetransformers'

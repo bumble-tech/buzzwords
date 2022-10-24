@@ -6,13 +6,13 @@ import cupy
 import numpy as np
 import pandas as pd
 import yaml
-from cuml import UMAP
+from cuml import UMAP, HDBSCAN
+from cuml.cluster import approximate_predict
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 from tqdm import tqdm
 
 from .models.clip_encoder import CLIPEncoder
-from .models.custom_hdbscan import HDBSCAN
 from .models.keywords import Keywords
 from .models.lemmatiser import CustomWordNetLemmatizer
 from .utils.generic_utils import HideAllOutput
@@ -63,7 +63,7 @@ class Buzzwords():
         Chosen embedding model
     umap_model : cuml.manifold.umap.UMAP
         cuML's UMAP model
-    hdbscan_model : custom_hdbscan.HDBSCAN
+    hdbscan_model : cuml.cluster.hdbscan.HDBSCAN
         Custom HDBSCAN model
     keyword_model : keywords.Keywords
         Chosen model for keyword gathering
@@ -129,7 +129,6 @@ class Buzzwords():
         self.get_keywords = bw_parameters['get_keywords']
         self.matryoshka_decay = bw_parameters['matryoshka_decay']
         self.keyword_backend = bw_parameters['keyword_backend']
-        self.prediction_data = bw_parameters['prediction_data']
 
         model_type = bw_parameters['model_type']
 
@@ -355,7 +354,6 @@ class Buzzwords():
         with HideAllOutput():
             self.hdbscan_models[-1].fit(
                 umap_embeddings,
-                prediction_data=self.prediction_data
             )
         self.pbar.update(1)
 
@@ -412,7 +410,7 @@ class Buzzwords():
         Also accepts numpy arrays/pandas series as input
         Make sure to reset_index(drop=True) if you use a series
         """
-        if self.prediction_data is False:
+        if self.model_parameters['HDBSCAN']['prediction_data'] is False:
             raise Exception('`prediction_data` is set to false for this model')
 
         embeddings = self.embedding_model.encode(
@@ -468,7 +466,7 @@ class Buzzwords():
 
         # Get cluster of data
         umap_embeddings = umap_models[0].transform(embeddings)
-        topics = hdbscan_models[0].approximate_predict(umap_embeddings)
+        topics = approximate_predict(hdbscan_models[0], umap_embeddings)[0]
 
         outlier_topics = topics == -1
 
@@ -567,7 +565,7 @@ class Buzzwords():
         destination : str
             Location to dump model to
         """
-        if self.prediction_data is False:
+        if self.model_parameters['HDBSCAN']['prediction_data'] is False:
             raise Exception('`prediction_data` is set to false for this model')
 
         destination = Path(destination)
@@ -576,16 +574,8 @@ class Buzzwords():
         if not destination.suffix:
             destination = destination / 'model.buzz'
 
-        # Drop FAISS indices so we can serialise
-        for index, hdbscan_model in enumerate(self.hdbscan_models):
-            self.hdbscan_models[index].faiss_index = None
-
         with open(destination, 'wb') as file:
             pickle.dump(self.__dict__, file)
-
-        # Recreate FAISS indices
-        for index, hdbscan_model in enumerate(self.hdbscan_models):
-            self.hdbscan_models[index].build_faiss_index()
 
     def load(self, destination: str) -> None:
         """
@@ -604,7 +594,3 @@ class Buzzwords():
 
         with open(destination, 'rb') as file:
             self.__dict__ = pickle.load(file)
-
-        # Recreate FAISS indices
-        for i in range(len(self.hdbscan_models)):
-            self.hdbscan_models[i].build_faiss_index()
