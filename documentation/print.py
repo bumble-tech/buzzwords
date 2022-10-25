@@ -36,6 +36,7 @@ def main():
     """
 
     # Print version number and Buzzwords docs
+    print("[<< Back](..)\n")
     print(f'# v{get_distribution("buzzwords").version}\n\n')
     print(convert_docs(Buzzwords, 'Buzzwords'))
 
