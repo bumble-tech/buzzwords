@@ -2,7 +2,7 @@
 
 # Local Installation
 
-Installation for buzzwords is somewhat complicated, due to the need for cuML (and to a lesser extent, FAISS) on an Nvidia GPU-powered machine. Buzzwords is only designed to work on Linux machines running Nvidia GPUs, and is it not recommended to try installation on other systems.
+Installation for buzzwords is somewhat complicated, due to the need for cuML on an Nvidia GPU-powered machine. Buzzwords is only designed to work on Linux machines running Nvidia GPUs, and is it not recommended to try installation on other systems.
 
 RAPIDS doesn't support installation through pip anymore, so we need to use conda environments. 
 
