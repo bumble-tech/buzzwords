@@ -161,6 +161,7 @@ class Buzzwords():
 
         silhouette_params = self.model_parameters['Silhouette']
         self.silhouette_random_state = silhouette_params['random_state']
+        self.run_silhouette_score = silhouette_params['run_silhouette_score']
 
     def fit(self, docs: List[str], recursions: int = 1) -> None:
         """
@@ -246,7 +247,9 @@ class Buzzwords():
         )
 
         # Silhouette score is a metric used to calculate the goodness of a clustering technique
-        self.get_silhouette_score(embeddings,topics)
+        if self.run_silhouette_score: 
+            self.silhouette_score = self.get_silhouette_score(embeddings,topics)
+            print(f"Silhouette score: {self.silhouette_score}")
 
         # Lemmatise words to avoid similar words in top n keywords
         if self.lemmatise:
@@ -616,4 +619,5 @@ class Buzzwords():
         labels : np.ndarray
             labels as predicted by the model 
         """
-        print(f"Silhouette score: {silhouette_score(X[labels!=-1],labels[labels!=-1],random_state=self.silhouette_random_state)}")
+        return silhouette_score(X[labels!=-1],labels[labels!=-1],random_state=self.silhouette_random_state)
+        
