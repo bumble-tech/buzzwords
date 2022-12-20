@@ -7,3 +7,4 @@ buzzwords.egg-info/*
 Gemfile.lock
 
 .DS_Store
+__pycache__

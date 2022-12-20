@@ -10,6 +10,7 @@ from cuml import UMAP, HDBSCAN
 from cuml.cluster import approximate_predict
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics import silhouette_score
 from tqdm import tqdm
 
 from .models.clip_encoder import CLIPEncoder
@@ -158,6 +159,10 @@ class Buzzwords():
         self.topic_descriptions = None
         self.topic_alterations = {}
 
+        silhouette_params = self.model_parameters['Silhouette']
+        self.silhouette_random_state = silhouette_params['random_state']
+        self.run_silhouette_score = silhouette_params['run_silhouette_score']
+
     def fit(self, docs: List[str], recursions: int = 1) -> None:
         """
         Fit model based on given data
@@ -240,6 +245,11 @@ class Buzzwords():
             recursions=recursions,
             min_cluster_size=int(self.model_parameters['HDBSCAN']['min_cluster_size'])
         )
+
+        # Silhouette score is a metric used to calculate the goodness of a clustering technique
+        if self.run_silhouette_score: 
+            self.silhouette_score = self.get_silhouette_score(embeddings,topics)
+            print(f"Silhouette score: {self.silhouette_score}")
 
         # Lemmatise words to avoid similar words in top n keywords
         if self.lemmatise:
@@ -594,3 +604,20 @@ class Buzzwords():
 
         with open(destination, 'rb') as file:
             self.__dict__ = pickle.load(file)
+
+    def get_silhouette_score(self, X: np.ndarray, labels: np.ndarray) -> float:
+        """
+        A Silhouette Coefficient or silhouette score is a metric used to calculate the goodness of a clustering technique
+        1: Means clusters are well apart from each other and clearly distinguished
+        0: Means clusters are indifferent, or we can say that the distance between clusters is not significant
+        -1: Means clusters are assigned in the wrong way
+
+        Parameters
+        ----------
+        X : np.ndarray
+            embeddings array
+        labels : np.ndarray
+            labels as predicted by the model 
+        """
+        return silhouette_score(X[labels!=-1],labels[labels!=-1],random_state=self.silhouette_random_state)
+        

@@ -10,7 +10,7 @@ conda create -y -n $env_name \
 source activate $env_name;
 
 pip3 install \
-    sentence-transformers==2.1.0 \
+    sentence-transformers==2.2.2 \
     keybert==0.5.1 \
     pytest~=7.0.0 \
     clip-by-openai==1.1;
